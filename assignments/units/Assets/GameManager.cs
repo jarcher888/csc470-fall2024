@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text statsText;
     public TMP_Text woodText;
     public TMP_Text stoneText;
+    public TMP_Text descText;
 
     public GameObject infoButton;
     public GameObject castleButton;
@@ -112,6 +113,7 @@ public class GameManager : MonoBehaviour
         infoButton.SetActive(true);
         woodText.text = "Wood: " + totalWood;
         stoneText.text = "Stone: " + totalStone;
+        descText.text = "Help the units collect resources to build shelter!";
     }
     public void OpenPopUp(){
         if (selectedUnit == null){
@@ -124,6 +126,7 @@ public class GameManager : MonoBehaviour
 
         woodText.text = "";
         stoneText.text = "";
+        descText.text = "";
         popUpWindow.SetActive(true);
         infoButton.SetActive(false);
     }

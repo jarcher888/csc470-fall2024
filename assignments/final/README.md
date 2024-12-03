@@ -21,9 +21,10 @@ My high bar is a game that has 2+ levels. The visual style is darker, to emulate
 I think I have some decent challenges at each level.
 
 ## Timeline
-12/3: have a player that can move and an outline of the first level
-12/5: implement a patrol unit and enable the player to be caught
-12/6: Core mechanic playtesting
-12/9: have another level complete and have the invisibility implemented
-12/11: have the game polished and tested for bugs. Implement audio and other outstanding UI elements
+### 12/3: have a player that can move and an outline of the first level
+### 12/5: implement a patrol unit and enable the player to be caught
+### 12/6: Core mechanic playtesting
+### 12/9: have another level complete and have the invisibility implemented
+### 12/11: have the game polished and tested for bugs. Implement audio and other outstanding UI elements
+
 Any remaining time will be used to reach my high bar.

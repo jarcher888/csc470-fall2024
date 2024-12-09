@@ -19,26 +19,25 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space)){
-            invisible = true;
-        }
         
+        
+        if (!GameManager.instance.playerCaught){
+            float vAxis = Input.GetAxis("Vertical");
+            float hAxis = Input.GetAxis("Horizontal");
 
-        float vAxis = Input.GetAxis("Vertical");
-        float hAxis = Input.GetAxis("Horizontal");
+            Vector3 cameraFlat = cameraObject.transform.forward;
+            cameraFlat.y = 0;
+            cameraFlat.Normalize();
 
-        Vector3 cameraFlat = cameraObject.transform.forward;
-        cameraFlat.y = 0;
-        cameraFlat.Normalize();
+            Vector3 leftRightMove = hAxis * moveSpeed * cameraObject.transform.right;
 
-        Vector3 leftRightMove = hAxis * moveSpeed * cameraObject.transform.right;
+            Vector3 amountToMove = cameraFlat * moveSpeed * vAxis + leftRightMove;
+            amountToMove *= Time.deltaTime;
 
-        Vector3 amountToMove = cameraFlat * moveSpeed * vAxis + leftRightMove;
-        amountToMove *= Time.deltaTime;
-
-        cc.Move(amountToMove);
-        if (amountToMove.magnitude > 0){
-            transform.forward = amountToMove.normalized;
+            cc.Move(amountToMove);
+            if (amountToMove.magnitude > 0){
+                transform.forward = amountToMove.normalized;
+            }
         }
     }
 }

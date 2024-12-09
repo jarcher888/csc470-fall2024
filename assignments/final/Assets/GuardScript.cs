@@ -11,18 +11,26 @@ public class GuardScript : MonoBehaviour
     // public static Action PlayerIsCaught;
     public GameObject patrolPoint;
     public NavMeshAgent nma;
-    public TMP_Text lostText;
+    // public TMP_Text lostText;
     public PlayerScript player;
     bool caught = false;
 
     LayerMask layerMask;
 
     Vector3 startPosition;
+
+    void OnEnable(){
+        GameManager.PlayerIsCaught += StopMoving;
+    }
+    void OnDisable(){
+        GameManager.PlayerIsCaught -= StopMoving;
+    }
     // Start is called before the first frame update
     void Start()
     {
+        nma.speed = 5;
         layerMask = LayerMask.GetMask("player");
-        lostText.text = "";
+        // lostText.text = "";
 
         // Debug.Log(patrolPoint.transform.position);
         startPosition = transform.position;
@@ -32,19 +40,21 @@ public class GuardScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!caught && !player.invisible){
+        if (!caught && !GameManager.instance.playerInvisible){
             Color rayColor = Color.yellow;
             RaycastHit hitInfo;
             Vector3 rayStart = transform.position + Vector3.up * 1;
 
-            if (Physics.Raycast(rayStart, transform.forward, out hitInfo, 4, layerMask)){
+            if (Physics.Raycast(rayStart, transform.forward, out hitInfo, 5, layerMask)){
                 if (hitInfo.collider.CompareTag("player")){
-                    Debug.Log("hit");
-                    lostText.text = "You've been caught!";
-                    caught = true;
+                    // Debug.Log("hit");
+                    // lostText.text = "You've been caught!";
+                    // caught = true;
+                    // nma.isStopped = true;
+                    GameManager.instance.playerCaught = true;
                 }
             }
-            Debug.DrawRay(rayStart, transform.forward * 4, rayColor);
+            Debug.DrawRay(rayStart, transform.forward * 5, rayColor);
         }
     }
 
@@ -68,5 +78,9 @@ public class GuardScript : MonoBehaviour
             }
             yield return new WaitForSeconds(1);
         }
+    }
+
+    void StopMoving(){
+        nma.isStopped = true;
     }
 }

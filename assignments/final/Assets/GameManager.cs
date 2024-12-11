@@ -9,8 +9,16 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public static Action PlayerIsCaught;
     public static Action Retry;
+    public static Action ChangeLevels;
+
+    public Camera cameraObject;
+
+    public AudioSource src;
+    public AudioClip buttonClickedSound, playerCaughtSound;
+    bool playerCaughtSoundPlayed = false;
 
     public PlayerScript player;
+    public int currentLevel;
 
     float invisibilityReloadTimer = 10f;
     float invisibilityActiveTimer = 3f;
@@ -22,6 +30,8 @@ public class GameManager : MonoBehaviour
     public TMP_Text invisibilityText;
 
     public GameObject retryPanel;
+
+    // public bool firstLevelFinished = false;
     
 
     void OnEnable(){
@@ -34,13 +44,26 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // PlayerPrefs.SetString("finishedLevel", "false");
+        currentLevel = 1;
         invisibilityText.text = "Invisibility: Available";
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Debug.Log(currentLevel);
+        // if (PlayerPrefs.GetString("finishedLevel") == "true"){
+        //     currentLevel = 2;
+        // }
+
         if (playerCaught){
+            if (!playerCaughtSoundPlayed){
+                src.clip = playerCaughtSound;
+                src.Play();
+                playerCaughtSoundPlayed = true;
+            }
             PlayerIsCaught?.Invoke();
             invisibilityText.text = "";
             retryPanel.SetActive(true);
@@ -72,8 +95,14 @@ public class GameManager : MonoBehaviour
         }
     }
     public void RetryButtonClicked(){
-        Debug.Log("clicked");
-        retryPanel.SetActive(false);
         Retry?.Invoke();
+        playerCaught = false;
+        src.clip = buttonClickedSound;
+        src.Play();
+        retryPanel.SetActive(false);
+        invisibiltyAvailable = true;
+        invisibilityText.text = "Invisibility: Available";
+        
     }
+
 }

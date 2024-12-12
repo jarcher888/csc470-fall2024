@@ -60,17 +60,16 @@ public class PlayerScript : MonoBehaviour
         if (other.CompareTag("firstLevelFinish")){
             firstLevelFinished = true;
             GameManager.instance.currentLevel++;
-            // PlayerPrefs.SetString("finishedLevel", "true");
-            SceneManager.LoadScene("SecondLevel");
+            GameManager.instance.src.clip = GameManager.instance.buttonClickedSound;
+            GameManager.instance.src.Play();
+            GameManager.instance.firstLevelFinished = true;
+        }else if(other.CompareTag("secondLevelFinish")){
+            GameManager.instance.secondLevelFinsh = true;
         }
     }
 
     void ResetLevel(){
         Debug.Log(startPosition);
-        // if (GameManager.instance.currentLevel == 1){
-        transform.position = startPosition;
-        // }else if (GameManager.instance.currentLevel == 2){
-            // transform.position = secondLevelStartPosition;
-        // }
+        cc.Move(startPosition);
     }
 }

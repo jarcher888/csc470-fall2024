@@ -115,15 +115,7 @@ public class GameManager : MonoBehaviour
         
     }
     public void RetryButtonClicked(){
-        Retry?.Invoke();
-        playerCaught = false;
-        src.clip = buttonClickedSound;
-        src.Play();
-        retryPanel.SetActive(false);
-        invisibiltyAvailable = true;
-        invisibilityText.text = "Invisibility: Available";
-        playerCaughtSoundPlayed = false;
-        
+        StartCoroutine(RetryLevel());
     }
 
     IEnumerator GoToSecondLevel(){
@@ -147,6 +139,15 @@ public class GameManager : MonoBehaviour
         }
         
         SceneManager.LoadScene("SampleScene");
+    }
+
+    IEnumerator RetryLevel(){
+        src.clip = buttonClickedSound;
+        src.Play();
+
+        yield return new WaitForSeconds(.5f);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
 
